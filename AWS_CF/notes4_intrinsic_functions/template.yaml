@@ -1,0 +1,59 @@
+Fn::AND
+  -Fn::AND acts as an AND operator
+  -Minimum number of conditions is 2
+  -Maximum number of conditions is 10
+  -Syntax : Fn::AND:[condition]
+  -Short syntax : !AND [condition]
+
+  Example :
+    MyAndCondition : !AND
+      -!Equals ["sg-mysggroup", ! Ref ASecurityGroup]
+      -!Condition SomeOtherCondition
+
+#######################################################################
+
+
+Fn::Equals
+  -Returns True if two values are equal else it will return False
+  -syntax : Fn::Equals : [value_1, value_2]
+  -short_syntax : !Equals [value_1, value_2]
+
+  Example :
+    UseProdCondition:
+      !Equals [!Ref EnvironmentType, prod]
+
+#######################################################################
+
+
+Fn::If
+  -If condition can be used in [metadata attribute], [update policy attribute], [property values in the Resources Section], and [Output Section]
+  -Syntax : Fn::If : [condition name, value_if_true, value_of_false] # just like ternary operator
+  -Short syntax : !If [condition name, value_if_true, value_of_false]
+
+#######################################################################
+
+
+Fn::Not
+  -Fn::Not acts as a NOT operator
+  -Syntax : Fn::Not : [condition]
+  -Short Syntax : !Not [condition]
+
+  Example:
+    MyNotCondition:
+      !Not [!Equals [!Ref EnvironmentType, prod]]
+
+######################################################################
+
+
+Fn::Or
+  -Fn::Or acts as an OR operator
+  -Minimum number of condition is 2
+  -Maximum number of condition is 10
+  -Syntax : Fn::Or : [condition, ...]
+  -Short syntax : !Or [condition, ..]
+
+  Example:
+    MyOrCondition:
+      !Or[!Equals [sg-mysggroup, !Ref ASecurityGroup], condition : someOtherCondition]
+
+
