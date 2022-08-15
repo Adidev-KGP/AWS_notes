@@ -1,0 +1,42 @@
+AWSTemplateFormatVersion : "2010-09-09"
+Description : "Create EC2 Instance"
+
+Parameters :
+  InstanceTypeParameters:
+    Description : Select Instance Type
+    Type : String
+    Default : t2.micro
+    AllowedValues:
+      -t2.micro
+      -t2.small
+      -t2.large
+    Description : Enter t2.micro, m1.small, m1.large. Default is t2.micro
+
+Resources :
+  Instance :
+    Type : AWS::EC2::Instance
+    Properties :
+      InstanceType : !Ref InstanceTypeParameter
+      ImageId : ami-0dba2cb6798deb6d8
+      AvailibilitZone : !Select
+                        - 1
+                        - !GetAZs
+                          Ref : 'AWS::Region'
+
+      Tags:
+        - key: Name
+          Value : cf-demo
+
+Outputs:
+  InstanceAvl:
+    Value : !GetAtt Instance.AvailibilityZone
+    Description : AvailibilityZone
+    Export :
+      Name : "AvailZone"
+
+  InstanceId :
+    Value : !Ref Instance
+    Description : Instance Information
+    Export:
+      Name : "Instance"
+
